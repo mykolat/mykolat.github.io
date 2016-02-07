@@ -12,12 +12,12 @@ google_analytics: UA-53548208-1
 google_verification:
 
 # Optional features
-animated:             false
+animated:             true
 show_related_posts:   false
 show_post_footers:    false
-show_social_icons:    false
-ajaxify_contact_form: false
-enable_mathjax: false
+show_social_icons:    true
+ajaxify_contact_form: true
+enable_mathjax: true
 
 # Disqus post comments
 # (leave blank to disable Disqus)
@@ -30,7 +30,8 @@ facebook_appid:
 facebook_comments_number: 10
 
 # Social icons
-github_username:
+facebook_username: tymchak
+github_username: mykolat
 bitbucket_username:
 stackoverflow_id:
 twitter_username:
