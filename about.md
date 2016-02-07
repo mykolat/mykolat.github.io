@@ -2,6 +2,7 @@
 layout: page
 title: About Pixyll
 permalink: /about/
+tags: about
 ---
 
 This Jekyll theme was crafted with <3 by [John Otander](http://johnotander.com)
@@ -16,4 +17,4 @@ Thanks to the following:
 * [BASSCSS](http://basscss.com)
 * [Jekyll](http://jekyllrb.com)
 * [Refills](http://refills.bourbon.io/)
-* [Solarized](http://ethanschoonover.com/solarized)
+* [Type Scale](http://type-scale.com/)
