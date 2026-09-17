@@ -1,28 +1,653 @@
----
-layout: default
----
-{% assign posts_count = (paginator.posts | size) %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ten years of shipping products end to end: mobile, web, backend, AI systems. Available full time, paid weekly.">
+<meta name="author" content="Mykola Tymchak">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Mykola Tymchak">
+<meta property="og:description" content="Ten years of shipping products end to end: mobile, web, backend, AI systems. Available full time, paid weekly.">
+<meta property="og:url" content="https://mykolat.github.io/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%9B%A0</text></svg>">
+<style>
+  html { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Mykola Tymchak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+<style>
+  :root {
+    --bg: #eff0eb;
+    --surface: #fbfbf9;
+    --ink: #14161a;
+    --ink-soft: #565d66;
+    --ink-faint: #868d94;
+    --rule: #d6d8d0;
+    --accent: #1f3cc7;
+    --accent-soft: #e3e6f7;
+    --live: #2e7d4f;
 
-<div class="home">
-  {% if posts_count > 0 %}
-    <div class="posts">
-      {% for post in paginator.posts %}
-        <div class="post py3">
-          <p class="post-meta">{{ post.date | date: site.date_format }}</p>
-          <a href="{{ post.url | prepend: site.baseurl }}" class="post-link"><h3 class="h1 post-title">{{ post.title }}</h3></a>
-          <p class="post-summary">
-            {% if post.summary %}
-              {{ post.summary }}
-            {% else %}
-              {{ post.excerpt }}
-            {% endif %}
-          </p>
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "Newsreader", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101215;
+      --surface: #171a1e;
+      --ink: #e8e9e4;
+      --ink-soft: #9aa1a6;
+      --ink-faint: #6d747a;
+      --rule: #2a2e33;
+      --accent: #7f9bff;
+      --accent-soft: #1b2440;
+      --live: #4ade80;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #101215;
+    --surface: #171a1e;
+    --ink: #e8e9e4;
+    --ink-soft: #9aa1a6;
+    --ink-faint: #6d747a;
+    --rule: #2a2e33;
+    --accent: #7f9bff;
+    --accent-soft: #1b2440;
+    --live: #4ade80;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-inline: 24px;
+    padding-block: 0 96px;
+  }
+
+  /* ---- masthead ---- */
+
+  .masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 22px 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .wordmark {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    background: var(--live);
+    border-radius: 50%;
+    flex: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .dot { animation: pulse 2.6s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+  }
+
+  /* ---- hero ---- */
+
+  .hero { padding-block: 72px 64px; }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(38px, 6.4vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin: 0;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .standfirst {
+    margin: 28px 0 0;
+    max-width: 58ch;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* ---- facts strip ---- */
+
+  .facts {
+    margin-top: 44px;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+
+  .fact {
+    padding: 18px 20px 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .fact dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 6px;
+  }
+
+  .fact dd {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- sections ---- */
+
+  section { padding-block: 64px 0; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 26px;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(26px, 3.4vw, 36px);
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    margin: 0 0 30px;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .lede {
+    max-width: 62ch;
+    font-size: 19px;
+    margin: 0 0 8px;
+  }
+
+  .lede + .lede { margin-top: 20px; }
+
+  .lede strong {
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--accent-soft);
+    padding: 0 4px;
+  }
+
+  /* ---- live now ---- */
+
+  .live-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  .live-list li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 14px;
+    align-items: start;
+    background: var(--surface);
+    padding: 20px 22px;
+    border-left: 2px solid var(--accent);
+  }
+
+  .live-list .dot { margin-top: 9px; }
+
+  .live-list h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+
+  .live-list p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .meta {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+  }
+
+  /* ---- ledger ---- */
+
+  .ledger { display: grid; }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 148px 1fr;
+    gap: 28px;
+    padding-block: 26px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .entry:last-child { border-bottom: 1px solid var(--rule); }
+
+  .years {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    padding-top: 3px;
+  }
+
+  .entry h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.015em;
+    margin: 0 0 4px;
+  }
+
+  .role {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+
+  .entry ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--ink-soft);
+    font-size: 16.5px;
+  }
+
+  .entry li { margin-bottom: 6px; }
+  .entry li:last-child { margin-bottom: 0; }
+
+  /* ---- stack ---- */
+
+  .stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 30px 40px;
+  }
+
+  .stack h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stack p {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--ink-soft);
+  }
+
+  /* ---- terms ---- */
+
+  .terms {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 26px 36px;
+    max-width: 900px;
+  }
+
+  .terms h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+
+  .terms p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* ---- contact ---- */
+
+  .contact {
+    margin-top: 72px;
+    border-top: 2px solid var(--ink);
+    padding-top: 34px;
+  }
+
+  .contact h2 { margin-bottom: 18px; }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-top: 26px;
+  }
+
+  .links a {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    padding: 11px 16px;
+    background: var(--surface);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .links a:hover,
+  .links a:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .colophon {
+    margin-top: 56px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 680px) {
+    body { font-size: 16px; }
+    .hero { padding-block: 48px 44px; }
+    .entry { grid-template-columns: 1fr; gap: 10px; }
+    .years { padding-top: 0; }
+    .fact { padding-right: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="wordmark">Mykola Tymchak</div>
+    <div class="status"><span class="dot"></span>Available full time</div>
+  </header>
+
+  <div class="hero">
+    <h1>Ten years of shipping products end to end. Right now I have room for <em>one</em>.</h1>
+    <p class="standfirst">
+      Mobile, web, backend, infrastructure. Alone, or leading a small team. Two apps live
+      in the App Store, an ERP running every day on construction sites in Prague, and a
+      multi-agent LLM system with 324 tests behind it.
+    </p>
+
+    <dl class="facts">
+      <div class="fact"><dt>Based</dt><dd>Ukraine, remote</dd></div>
+      <div class="fact"><dt>Hours</dt><dd>Overlaps EU and US</dd></div>
+      <div class="fact"><dt>Payment</dt><dd>Weekly, USDT or wire</dd></div>
+      <div class="fact"><dt>From</dt><dd>$2,000 / week</dd></div>
+    </dl>
+  </div>
+
+  <section>
+    <p class="eyebrow">Running in production</p>
+    <h2>Things you can open right now</h2>
+    <ul class="live-list">
+      <li>
+        <span class="dot"></span>
+        <div>
+          <h3>TXC Wallet</h3>
+          <p>A React Native crypto wallet for the TexitCoin blockchain, adapted from a BlueWallet fork: network layer, coin parameters, wallet flows, release builds.</p>
+          <span class="meta">App Store since Sep 2024 · maintained through v1.8.1</span>
         </div>
-      {% endfor %}
-    </div>
+      </li>
+      <li>
+        <span class="dot"></span>
+        <div>
+          <h3>Tiny Schedule</h3>
+          <p>Booking app for salons, built from scratch on top of the React platform I was leading at the time.</p>
+          <span class="meta">App Store · 4.9 stars · still live after 5 years</span>
+        </div>
+      </li>
+      <li>
+        <span class="dot"></span>
+        <div>
+          <h3>ConOS</h3>
+          <p>Workforce and finance ERP for a construction company. GPS-geofenced time tracking, shift approvals, seven-tier access, payroll across 15 currencies with ECB sync, LLM contract risk analysis.</p>
+          <span class="meta">Sole developer · shipped in 8 months · used daily on site</span>
+        </div>
+      </li>
+      <li>
+        <span class="dot"></span>
+        <div>
+          <h3>Indic</h3>
+          <p>Autonomous multi-agent trading system: five LLM personas debate, a judge agent decides, a deterministic watchdog holds the risk limits. Graph RAG memory on Postgres and pgvector.</p>
+          <span class="meta">324 automated tests · full decision observability</span>
+        </div>
+      </li>
+    </ul>
+  </section>
 
-    {% include pagination.html %}
-  {% else %}
-    <h1 class='center'>{{ site.text.index.coming_soon }}</h3>
-  {% endif %}
+  <section>
+    <p class="eyebrow">How I work</p>
+    <h2>I don't sell hours. I sell the thing, finished.</h2>
+    <p class="lede">
+      Give me a goal, not a ticket. I come back with something you can click, usually inside
+      the first week, and then we harden it. <strong>Since 2024 I build with AI pipelines</strong> —
+      Claude Code and LLM APIs are part of the toolchain, not a demo on the side. That is how
+      one engineer delivered an ERP with E2E tests and CI in eight months.
+    </p>
+    <p class="lede">
+      You get the throughput of a small team and one person to talk to. I pay for my own tools.
+    </p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Record</p>
+    <h2>Where the ten years went</h2>
+    <div class="ledger">
+
+      <article class="entry">
+        <div class="years">2024 — now</div>
+        <div>
+          <h3>Freelance developer and architect</h3>
+          <p class="role">Independent</p>
+          <ul>
+            <li>ConOS ERP, Prague — sole developer, React 19, TypeScript, Supabase, Claude API</li>
+            <li>TXC Wallet — React Native wallet for a new blockchain, live in the App Store</li>
+            <li>Fortikus — offline-first family messenger: Expo, Firebase, custom MMKV persistence</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="years">2021 — 2024</div>
+        <div>
+          <h3>Picket Homes</h3>
+          <p class="role">Full stack · proptech, $20M Series B</p>
+          <ul>
+            <li>Growth team: the acquisition pipeline behind roughly $5M in monthly revenue across 25+ US markets</li>
+            <li>Designed and built the real-time investor request chat that launched the individual-investor product</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="years">2019 — 2021</div>
+        <div>
+          <h3>Bloknotapp</h3>
+          <p class="role">Lead developer · SaaS for salons</p>
+          <ul>
+            <li>Led the Next.js booking platform and built the React Native app from scratch</li>
+            <li>Moved the infrastructure to Google Cloud: 99.99% uptime, about 30% lower cost</li>
+            <li>Mentored five developers</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="years">2017 — 2019</div>
+        <div>
+          <h3>Brightcom</h3>
+          <p class="role">Node.js developer · ad-tech</p>
+          <ul>
+            <li>Rebuilt a large legacy PHP system into Node.js microservices</li>
+            <li>Real-time data processing in Scala; a team of five running around 30 services</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="years">2014 — 2017</div>
+        <div>
+          <h3>MailLift · Curensea · Poster</h3>
+          <p class="role">Where the JavaScript started</p>
+          <ul>
+            <li>React and Node dashboards, Stripe billing, POS frontends</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Toolkit</p>
+    <h2>What I reach for</h2>
+    <div class="stack">
+      <div>
+        <h3>AI systems</h3>
+        <p>Multi-agent orchestration · agent debate and judge patterns · RAG and Graph RAG on pgvector · structured outputs and tool use · provider fallback and cost control · agent observability</p>
+      </div>
+      <div>
+        <h3>Product</h3>
+        <p>TypeScript · React · Next.js · React Native · Expo · Node.js · WebSockets</p>
+      </div>
+      <div>
+        <h3>Data and infra</h3>
+        <p>PostgreSQL · Supabase · MongoDB · Redis · Google Cloud · Docker · CI/CD</p>
+      </div>
+      <div>
+        <h3>Crypto</h3>
+        <p>Bitcoin-like chains · Omni Layer · IPFS · wallet flows · App Store release for a coin</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Terms</p>
+    <h2>Simple on purpose</h2>
+    <ul class="terms">
+      <li>
+        <h3>One client at a time</h3>
+        <p>Full time means full time. Nothing else running on the side.</p>
+      </li>
+      <li>
+        <h3>Paid weekly</h3>
+        <p>USDT or a normal wire, whichever is less friction for you.</p>
+      </li>
+      <li>
+        <h3>First week decides</h3>
+        <p>You will have something working to look at before the second invoice exists.</p>
+      </li>
+      <li>
+        <h3>No lock-in</h3>
+        <p>Your repos, your infrastructure, your keys. I leave the place documented.</p>
+      </li>
+    </ul>
+  </section>
+
+  <div class="contact">
+    <h2>Tell me what you are building.</h2>
+    <p class="lede">
+      One paragraph is enough. Telegram is fastest. If it is a fit I will say so the same
+      day, and if it is not I will tell you that too.
+    </p>
+    <div class="links">
+      <a href="https://github.com/mykolat">github.com/mykolat</a>
+      <a href="https://apps.apple.com/ua/app/txc-wallet/id6593671361">TXC Wallet ↗</a>
+      <a href="https://apps.apple.com/ua/app/tiny-schedule-scheduling-app/id1538580991">Tiny Schedule ↗</a>
+    </div>
+    <p class="colophon">
+      Software engineering, Lviv Polytechnic National University · Ukrainian, English ·
+      Updated September 2026
+    </p>
+  </div>
+
 </div>
+</body>
+</html>
